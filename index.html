@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe with AI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Крестики-Нолики с ИИ</h1>
+        <div class="difficulty-selector">
+            <label>Сложность:</label>
+            <select id="difficulty">
+                <option value="easy">Легко</option>
+                <option value="medium">Средне</option>
+                <option value="hard" selected>Сложно</option>
+            </select>
+        </div>
+        <div class="game-status" id="status">Ваш ход (X)</div>
+        <div class="board" id="board">
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+        </div>
+        <button class="reset-btn" id="resetBtn">Сбросить игру</button>
+        <button class="chat-btn" id="chatBtn">💬 Чат с ИИ</button>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>🤖 Чат с ИИ</h3>
+                <button class="close-chat" id="closeChat">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Привет! Я ИИ-помощник игры в крестики-нолики. Задай мне вопрос о игре!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Задайте вопрос об игре..." maxlength="200">
+                <button id="sendMessage">Отправить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
