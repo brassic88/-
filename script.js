@@ -314,10 +314,7 @@ function handleCellClick(event) {
         return;
     }
 
-    // В локальном мультиплеере проверяем, что ходит текущий игрок
-    if (isLocalMultiplayer && player !== currentPlayer) {
-        return;
-    }
+    // В локальном мультиплеере ходы всегда разрешены - игроки по очереди
 
     // В одиночной игре проверяем ход ИИ
     if (!isLocalMultiplayer && !isOnlineMultiplayer && currentPlayer === 'O') {
