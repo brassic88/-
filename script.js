@@ -9,7 +9,6 @@ const hintBtn = document.getElementById('hintBtn');
 const historyBtn = document.getElementById('historyBtn');
 const doubleMoveBtn = document.getElementById('doubleMoveBtn');
 const replaceBtn = document.getElementById('replaceBtn');
-const localMultiplayerBtn = document.getElementById('localMultiplayerBtn');
 const tournamentBtn = document.getElementById('tournamentBtn');
 const difficultySelect = document.getElementById('difficulty');
 const boardTypeSelect = document.getElementById('boardType');
@@ -33,11 +32,6 @@ const winRate = document.getElementById('winRate');
 const currentRating = document.getElementById('currentRating');
 const achievementsList = document.getElementById('achievementsList');
 
-const localMultiplayerModal = document.getElementById('localMultiplayerModal');
-const closeLocalMultiplayer = document.getElementById('closeLocalMultiplayer');
-const player1NameInput = document.getElementById('player1Name');
-const player2NameInput = document.getElementById('player2Name');
-const startLocalGameBtn = document.getElementById('startLocalGameBtn');
 
 // Онлайн мультиплеер элементы
 const onlineMultiplayerModal = document.getElementById('onlineMultiplayerModal');
@@ -88,11 +82,7 @@ let doubleMoveActive = false; // Флаг для двойного хода
 let powerUpsUsed = 0; // Счетчик использованных бустеров
 
 // Мультиплеер
-let isLocalMultiplayer = false;
 let isOnlineMultiplayer = false;
-let player1Name = 'Игрок X';
-let player2Name = 'Игрок O';
-let currentPlayerName = 'Игрок X';
 
 // Онлайн мультиплеер
 let onlineGameId = null;
@@ -314,10 +304,8 @@ function handleCellClick(event) {
         return;
     }
 
-    // В локальном мультиплеере ходы всегда разрешены - игроки по очереди
-
     // В одиночной игре проверяем ход ИИ
-    if (!isLocalMultiplayer && !isOnlineMultiplayer && currentPlayer === 'O') {
+    if (!isOnlineMultiplayer && currentPlayer === 'O') {
         return;
     }
 
@@ -413,12 +401,7 @@ function makeMove(index, player) {
     }
 
     // Определяем следующего игрока в зависимости от режима
-    if (isLocalMultiplayer) {
-        // В локальном мультиплеере игроки всегда чередуются
-        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        currentPlayerName = currentPlayer === 'X' ? player1Name : player2Name;
-        statusText.textContent = `Ход ${currentPlayerName} (${currentPlayer})`;
-    } else if (isOnlineMultiplayer) {
+    if (isOnlineMultiplayer) {
         // В онлайн мультиплеере после хода обновляем статус и ждем соперника
         statusText.textContent = 'Ожидание хода соперника...';
         return; // Не меняем currentPlayer здесь
@@ -857,9 +840,7 @@ function getDifficultyName(diff) {
 }
 
 function updateGameStatus() {
-    if (isLocalMultiplayer) {
-        statusText.textContent = `Ход ${currentPlayerName} (${currentPlayer})`;
-    } else if (gameMode === 'cooperation') {
+    if (gameMode === 'cooperation') {
         statusText.textContent = '🤝 Режим кооперации: вы и ИИ вместе против системы!';
     } else if (gameMode === 'reverse') {
         statusText.textContent = '🔄 Обратные правила: проигрывает тот, кто соберет линию первым!';
@@ -1030,42 +1011,8 @@ function updateAchievements() {
         '<p>Пока нет достижений. Играйте больше!</p>';
 }
 
-function openLocalMultiplayer() {
-    localMultiplayerModal.classList.add('show');
-    player1NameInput.focus();
-}
-
-function closeLocalMultiplayerModal() {
-    localMultiplayerModal.classList.remove('show');
-}
-
-function startLocalGame() {
-    player1Name = player1NameInput.value.trim() || 'Игрок X';
-    player2Name = player2NameInput.value.trim() || 'Игрок O';
-
-    isLocalMultiplayer = true;
-    currentPlayer = 'X';
-    currentPlayerName = player1Name;
-
-    // Скрываем элементы ИИ
-    document.querySelector('.difficulty-selector').style.display = 'none';
-    document.querySelector('.power-ups').style.display = 'none';
-
-    // Устанавливаем только классический режим для мультиплеера
-    gameMode = 'classic';
-    boardType = '3x3';
-    boardSize = 3;
-    winLength = 3;
-
-    generateWinningConditions();
-    createBoard();
-    resetGame();
-
-    closeLocalMultiplayerModal();
-}
 
 function switchToSinglePlayer() {
-    isLocalMultiplayer = false;
     isOnlineMultiplayer = false;
 
     // Показываем элементы ИИ
@@ -1083,8 +1030,8 @@ function openOnlineMultiplayer() {
     // Имитация подключения к серверу
     setTimeout(() => {
         connectionStatus.innerHTML = '<p>✅ Подключено! Выберите действие:</p>';
-        document.getElementById('onlineMenu').style.display = 'flex';
-        document.getElementById('onlineMenu').style.flexDirection = 'column';
+        document.querySelector('.online-menu').style.display = 'flex';
+        document.querySelector('.online-menu').style.flexDirection = 'column';
     }, 1000);
 }
 
@@ -1122,7 +1069,7 @@ function createOnlineRoom() {
 }
 
 function joinOnlineRoom() {
-    document.getElementById('onlineMenu').style.display = 'none';
+    document.querySelector('.online-menu').style.display = 'none';
     roomInputDiv.style.display = 'flex';
     roomIdInput.focus();
 }
@@ -1367,7 +1314,6 @@ hintBtn.addEventListener('click', getHint, { passive: true });
 historyBtn.addEventListener('click', showGameHistory, { passive: true });
 doubleMoveBtn.addEventListener('click', activateDoubleMove, { passive: true });
 replaceBtn.addEventListener('click', replaceOpponentSymbol, { passive: true });
-localMultiplayerBtn.addEventListener('click', openLocalMultiplayer, { passive: true });
 tournamentBtn.addEventListener('click', openTournament, { passive: true });
 onlineMultiplayerBtn.addEventListener('click', openOnlineMultiplayer, { passive: true });
 difficultySelect.addEventListener('change', handleDifficultyChange, { passive: true });
@@ -1383,13 +1329,6 @@ tournamentModal.addEventListener('click', (event) => {
     }
 }, { passive: true });
 
-closeLocalMultiplayer.addEventListener('click', closeLocalMultiplayerModal, { passive: true });
-startLocalGameBtn.addEventListener('click', startLocalGame, { passive: true });
-localMultiplayerModal.addEventListener('click', (event) => {
-    if (event.target === localMultiplayerModal) {
-        closeLocalMultiplayerModal();
-    }
-}, { passive: true });
 
 // Онлайн мультиплеер обработчики
 closeOnlineMultiplayer.addEventListener('click', closeOnlineMultiplayerModal, { passive: true });

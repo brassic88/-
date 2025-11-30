@@ -43,7 +43,6 @@
         </div>
         <div class="multiplayer-controls">
             <button class="multiplayer-btn" id="onlineMultiplayerBtn" title="Онлайн игра через WebSocket">🌐 Онлайн мультиплеер</button>
-            <button class="multiplayer-btn" id="localMultiplayerBtn" title="Игра на одном устройстве">👥 Локальный мультиплеер</button>
             <button class="multiplayer-btn" id="tournamentBtn" title="Турнирная таблица">🏆 Турнир</button>
         </div>
         <div class="theme-selector">
@@ -148,36 +147,6 @@
         </div>
     </div>
 
-    <!-- Local Multiplayer Modal -->
-    <div class="local-multiplayer-modal" id="localMultiplayerModal">
-        <div class="local-multiplayer-container">
-            <div class="local-multiplayer-header">
-                <h3>👥 Локальный мультиплеер</h3>
-                <button class="close-local-multiplayer" id="closeLocalMultiplayer">✕</button>
-            </div>
-            <div class="local-multiplayer-content">
-                <div class="player-setup">
-                    <div class="player-input">
-                        <label for="player1Name">Игрок X:</label>
-                        <input type="text" id="player1Name" placeholder="Имя игрока X" maxlength="20">
-                    </div>
-                    <div class="player-input">
-                        <label for="player2Name">Игрок O:</label>
-                        <input type="text" id="player2Name" placeholder="Имя игрока O" maxlength="20">
-                    </div>
-                </div>
-                <div class="game-instructions">
-                    <p>🎮 <strong>Как играть:</strong></p>
-                    <ul>
-                        <li>Игроки по очереди делают ходы на одном устройстве</li>
-                        <li>Первый игрок использует X, второй - O</li>
-                        <li>Цель - собрать линию из символов</li>
-                    </ul>
-                </div>
-                <button class="start-local-game-btn" id="startLocalGameBtn">🚀 Начать игру</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Online Multiplayer Modal -->
     <div class="online-multiplayer-modal" id="onlineMultiplayerModal">
